@@ -1,10 +1,20 @@
 use sequoia_openpgp as openpgp;
-use openpgp::cert::prelude::*;
+// use openpgp::cert::prelude::*;
 
 use openpgp::packet::prelude::*;
-use sequoia_openpgp::parse::Parse;
-use openpgp::serialize::Serialize;
+// use sequoia_openpgp::parse::Parse;
+// use openpgp::serialize::Serialize;
 use openpgp::types::Curve;
+
+use rustler::{Atom, NifResult, NifStruct};
+
+mod atoms { rustler::atoms! {ok, error} }
+
+#[derive(NifStruct)]
+#[module = "Opal.Key"]
+pub struct OpalKey {
+    pub public_key: String,
+}
 
 /*
 SCOPE -
@@ -22,34 +32,13 @@ SCOPE -
   })
 */
 
-#[rustler::nif]
-fn add(a: i64, b: i64) -> i64 {
-    a + b
-}
-
 /* - getPCIPublicKey() */
 #[rustler::nif]
-fn get_pci_public_key() Key {
-  Key::from(Key4::generate_ecc(true, Curve::Ed25519)?);
+fn get_pci_public_key() -> NifResult<(Atom, OpalKey)> {
+  let key = Key4::generate_ecc(true, Curve::Ed25519).unwrap();
+  let key: Key<key::SecretParts, key::PrimaryRole> = Key::from(key);
+
+  Ok((atoms::ok(), OpalKey{public_key: key.parts_into_public().to_string()}))
 }
 
-// Generate a new certificate.  It has secret key material.
-let (cert, _) = CertBuilder::new()
-    .generate()?;
-
-let pk = cert.primary_key().key();
-assert!(pk.has_secret());
-
-// Serializing a `Key<key::PublicParts, _>` drops the secret key
-// material.
-let mut bytes = Vec::new();
-Packet::from(pk.clone()).serialize(&mut bytes);
-let p : Packet = Packet::from_bytes(&bytes)?;
-
-if let Packet::PublicKey(key) = p {
-    assert!(! key.has_secret());
-} else {
-    unreachable!();
-}
-
-rustler::init!("Elixir.Opal", [add]);
+rustler::init!("Elixir.Opal", [get_pci_public_key]);
