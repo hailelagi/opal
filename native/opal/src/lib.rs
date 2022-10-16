@@ -24,7 +24,7 @@ pub struct OpalKey {
 #[derive(NifStruct)]
 #[module = "Opal.Message"]
 pub struct OpalMessage {
-    pub message: sequoia_openpgp::Message,
+    pub message: Message,
 }
 
 #[rustler::nif]
@@ -36,8 +36,6 @@ fn get_pci_public_key() -> NifResult<(Atom, OpalKey)> {
   Ok((atoms::ok(), OpalKey{public_key: key.parts_into_public().to_string()}))
 }
 
-
-/* - createMessage({ text: JSON.stringify(dataToEncrypt) }) */
 #[rustler::nif]
 fn create_message(text: String) -> NifResult<(Atom, OpalMessage)> {
 let mut cursor = io::Cursor::new(&text);
@@ -48,9 +46,9 @@ reader.read_to_end(&mut buf).unwrap();
 
 
 let message = Message::from_bytes(&buf).unwrap();
-let message = OpalMessage { message: message };
+// TODO:let message = message.serialize(o)
 
-Ok((atoms::ok(), message))
+Ok((atoms::ok(), OpalMessage{message}))
 }
 
 

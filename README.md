@@ -52,7 +52,7 @@ return async function(dataToEncrypt: CardDetails): Promise<EncryptedValue> {
 }
 ```
 
-can now be achieved in elixir:
+might be achieved in elixir like so:
 
 ```elixir
 with {:ok, %Key{public_key: key}} <- Opal.get_pci_public_key(), 
