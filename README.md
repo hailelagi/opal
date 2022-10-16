@@ -52,12 +52,15 @@ return async function(dataToEncrypt: CardDetails): Promise<EncryptedValue> {
 }
 ```
 
-can now be achieved with a liveview.
-
-TODO: test liveview example
+can now be achieved in elixir:
 
 ```elixir
-
+with {:ok, %Key{public_key: key}} <- Opal.get_pci_public_key(), 
+     {:ok, data} <- Opal.encrypt(key, %{hello: "world"}) do
+       data
+     else
+     # error handing
+     end
 ```
 
 ## Installation
