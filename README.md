@@ -2,6 +2,11 @@
 
 A PGP encryption and decryption library via NIF bindings in [sequoia](https://crates.io/crates/sequoia-openpgp)
 
+## Time Limit
+
+I initially started building something completely different, however towards the end of the hackathon I decided to try to
+build this instead, as I got stuck coming up with a good idea for the initial LiveView esque project.
+
 ## Usecase/Example
 
 In order to create [secure financial systems]((https://www.precisely.com/blog/data-security/pci-compliance-standards-pci-dss)),
