@@ -56,7 +56,9 @@ can now be achieved in elixir:
 
 ```elixir
 with {:ok, %Key{public_key: key}} <- Opal.get_pci_public_key(), 
-     {:ok, data} <- Opal.encrypt(key, %{hello: "world"}) do
+     {:ok, json_data} <- Jason.encode(%{hello: world}),
+     {:ok, message} <- Opal.create_message(json_data),
+     {:ok, data} <- Opal.encrypt(key, message) do
        data
      else
      # error handing
