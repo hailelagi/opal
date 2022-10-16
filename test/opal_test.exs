@@ -19,7 +19,8 @@ defmodule OpalTest do
 
   test "it creates a PGP message", %{msg: msg} do
 
-    assert {:ok, _} = Opal.create_message(msg)
+    assert {:ok, message} = Opal.create_message(msg)
+    assert is_struct(message)
   end
 
   test "it encrypts arbitrary data with a key", %{msg: msg} do
