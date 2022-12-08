@@ -1,6 +1,7 @@
 # Opal
 
-A PGP encryption and decryption library via NIF bindings in [sequoia](https://crates.io/crates/sequoia-openpgp). This project started as a part of [spawnfest 2022](https://github.com/spawnfest/opal)
+A PGP encryption and decryption library via NIF bindings in [sequoia](https://crates.io/crates/sequoia-openpgp). 
+This project started as a part of [spawnfest 2022](https://github.com/spawnfest/opal)
 
 ## Usecase/Example
 
