@@ -1,11 +1,6 @@
 # Opal
 
-A PGP encryption and decryption library via NIF bindings in [sequoia](https://crates.io/crates/sequoia-openpgp)
-
-## Time Limit
-
-I initially started building something completely different, however towards the end of the hackathon I decided to try to
-build this instead, as I got stuck coming up with a good idea for the initial LiveView esque project.
+A PGP encryption and decryption library via NIF bindings in [sequoia](https://crates.io/crates/sequoia-openpgp). This project started as a part of [spawnfest 2022](https://github.com/spawnfest/opal)
 
 ## Usecase/Example
 
